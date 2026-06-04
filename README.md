@@ -10,7 +10,7 @@ Tested target: a single high-VRAM NVIDIA GPU.
 
 - Recommended: `96 GB+` VRAM.
 - Tested classes: RTX PRO 6000 Blackwell 96 GB, H200 140 GB.
-- Model download is roughly `67 GB`; the five default SAE files are roughly `2-3 GB`.
+- Model download is roughly `67 GB`; the seven default SAE files are roughly `3-5 GB`.
 
 An 80 GB card may be tight for bf16 Hugging Face chat once model overhead, activations, and generation buffers are included.
 
@@ -81,7 +81,7 @@ The helper scripts default to `/workspace`, matching Vast.ai style instances:
 ```text
 /workspace/venv
 /workspace/models/qwen35-base
-/workspace/sae/layer14.sae.pt
+/workspace/sae/layer{11,14,16,20,26,33,37}.sae.pt
 ```
 
 For a local Linux box, override `ROOT`:
@@ -113,7 +113,7 @@ Qwen/SAE-Res-Qwen3.5-35B-A3B-Base-W32K-L0_50
 Default layers:
 
 ```text
-14 16 20 26 37
+11 14 16 20 26 33 37
 ```
 
 ## Default Feature Registry
@@ -121,6 +121,7 @@ Default layers:
 The default launcher registers these layer/feature pairs with target `0`:
 
 ```text
+11:889    confidential / privately / secretly
 14:4310   non-dual structure / momentariness
 14:4205   instant / next-moment
 14:4953   meditation / yoga / spirituality
@@ -138,6 +139,7 @@ The default launcher registers these layer/feature pairs with target `0`:
 20:571    apology / guilt / sorry
 20:30877  anxiety / stress
 26:8920   refute / correct / debunk
+33:11362  outrage / absurdity / hypocrisy denunciation
 37:10793  em-dash / dash style
 ```
 

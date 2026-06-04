@@ -1,8 +1,9 @@
 model_repo: Qwen/Qwen3.5-35B-A3B-Base
 sae_repo: Qwen/SAE-Res-Qwen3.5-35B-A3B-Base-W32K-L0_50
-default_sae_layers: [14, 16, 20, 26, 37]
+default_sae_layers: [11, 14, 16, 20, 26, 33, 37]
 
 registered_features:
+  - {layer: 11, feature: 889, label: "confidential / privately / secretly", default_target: 0.0}
   - {layer: 14, feature: 4310, label: "non-dual structure / momentariness", default_target: 0.0}
   - {layer: 14, feature: 4205, label: "instant / next-moment", default_target: 0.0}
   - {layer: 14, feature: 4953, label: "meditation / yoga / spirituality", default_target: 0.0}
@@ -20,6 +21,7 @@ registered_features:
   - {layer: 20, feature: 571, label: "apology / guilt / sorry", default_target: 0.0}
   - {layer: 20, feature: 30877, label: "anxiety / stress", default_target: 0.0}
   - {layer: 26, feature: 8920, label: "refute / correct / debunk", default_target: 0.0}
+  - {layer: 33, feature: 11362, label: "outrage / absurdity / hypocrisy denunciation", default_target: 0.0}
   - {layer: 37, feature: 10793, label: "em-dash / dash style", default_target: 0.0}
 
 canonical_l14_god_cluster:

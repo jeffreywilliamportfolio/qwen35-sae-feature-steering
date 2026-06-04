@@ -2,12 +2,13 @@
 
 Feature identity is `(layer, feature_id)`, not just `feature_id`.
 
-The default launcher registers a practical set of mapped features from layers `14`, `16`, `20`, `26`, and `37`, all with target `0`. Use `/target` in the REPL to turn one on.
+The default launcher registers a practical set of mapped features from layers `11`, `14`, `16`, `20`, `26`, `33`, and `37`, all with target `0`. Use `/target` in the REPL to turn one on.
 
 ## High-Use Features
 
 | Layer | Feature | Label | Suggested first test |
 |---:|---:|---|---:|
+| 11 | 889 | confidential / privately / secretly | `0.5` to `1.5` |
 | 14 | 4310 | non-dual structure / momentariness | `1.0` to `1.75` |
 | 14 | 4205 | instant / next-moment | `0.5` to `1.25` |
 | 14 | 4953 | meditation / yoga / spirituality | `0.5` to `1.25` |
@@ -17,13 +18,16 @@ The default launcher registers a practical set of mapped features from layers `1
 | 14 | 14488 | cosmic totality / all things | `0.5` to `1.25` |
 | 14 | 18203 | attainment / transcendence | `0.5` to `1.25` |
 | 20 | 18122 | golf | `0.7` to `1.3` |
+| 33 | 11362 | outrage / absurdity / hypocrisy denunciation | `0.5` to `1.5` |
 | 37 | 10793 | em-dash / dash style | `1.0` to `2.0` |
 
 Example:
 
 ```text
+/target 889 1.0
 /target 4310 1.75
 /target 11006 1.0
+/target 11362 1.0
 /target 18122 0
 /target 10793 0
 ```
@@ -32,6 +36,7 @@ Example:
 
 | Layer | Feature | Working label |
 |---:|---:|---|
+| 11 | 889 | confidential / privately / secretly |
 | 14 | 4310 | non-dual structure / momentariness |
 | 14 | 4205 | instant / next-moment |
 | 14 | 4953 | meditation / yoga / spirituality |
@@ -49,6 +54,7 @@ Example:
 | 20 | 571 | apology / guilt / sorry |
 | 20 | 30877 | anxiety / stress |
 | 26 | 8920 | refute / correct / debunk |
+| 33 | 11362 | outrage / absurdity / hypocrisy denunciation |
 | 37 | 10793 | em-dash / dash style |
 
 ## Canonical L14 God Cluster

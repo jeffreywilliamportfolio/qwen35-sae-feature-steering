@@ -17,10 +17,12 @@ Qwen/SAE-Res-Qwen3.5-35B-A3B-Base-W32K-L0_50
 The default launcher expects:
 
 ```text
+layer11.sae.pt
 layer14.sae.pt
 layer16.sae.pt
 layer20.sae.pt
 layer26.sae.pt
+layer33.sae.pt
 layer37.sae.pt
 ```
 
@@ -87,4 +89,3 @@ A useful reproduction should report:
 - Clamp string or REPL commands.
 - Temperature, top-p, top-k, repetition penalty, no-repeat n-gram size.
 - Seed state and whether `/reset` was used.
-

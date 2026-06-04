@@ -6,7 +6,7 @@ MODEL_REPO="${MODEL_REPO:-Qwen/Qwen3.5-35B-A3B-Base}"
 SAE_REPO="${SAE_REPO:-Qwen/SAE-Res-Qwen3.5-35B-A3B-Base-W32K-L0_50}"
 MODEL_DIR="${MODEL_DIR:-$ROOT/models/qwen35-base}"
 SAE_DIR="${SAE_DIR:-$ROOT/sae}"
-SAE_LAYERS="${SAE_LAYERS:-14 16 20 26 37}"
+SAE_LAYERS="${SAE_LAYERS:-11 14 16 20 26 33 37}"
 
 if [[ -z "${PYTHON:-}" ]]; then
   if [[ -x "$ROOT/venv/bin/python" ]]; then
