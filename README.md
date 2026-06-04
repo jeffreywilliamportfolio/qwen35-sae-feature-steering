@@ -20,7 +20,7 @@ On a cloud GPU box:
 (Have your HuggingFace Token ready or the download will throttle)
 
 ```bash
-git clone <your-new-repo-url>
+git clone https://github.com/jeffreywilliamportfolio/qwen35-sae-feature-steering
 cd qwen35-sae-feature-steering
 
 python3 -m venv /workspace/venv
