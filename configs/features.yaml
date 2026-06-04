@@ -3,7 +3,14 @@ sae_repo: Qwen/SAE-Res-Qwen3.5-35B-A3B-Base-W32K-L0_50
 default_sae_layers: [14, 16, 20, 26, 37]
 
 registered_features:
-  - {layer: 14, feature: 4310, label: "non-dual / God actuator", default_target: 0.0}
+  - {layer: 14, feature: 4310, label: "non-dual structure / momentariness", default_target: 0.0}
+  - {layer: 14, feature: 4205, label: "instant / next-moment", default_target: 0.0}
+  - {layer: 14, feature: 4953, label: "meditation / yoga / spirituality", default_target: 0.0}
+  - {layer: 14, feature: 11006, label: "Buddhist / impermanence", default_target: 0.0}
+  - {layer: 14, feature: 13454, label: "present moment / immediacy", default_target: 0.0}
+  - {layer: 14, feature: 14182, label: "Zen / Chan Buddhism", default_target: 0.0}
+  - {layer: 14, feature: 14488, label: "cosmic totality / all things", default_target: 0.0}
+  - {layer: 14, feature: 18203, label: "attainment / transcendence", default_target: 0.0}
   - {layer: 14, feature: 1651, label: "tourism / attractions", default_target: 0.0}
   - {layer: 14, feature: 6970, label: "love / affection", default_target: 0.0}
   - {layer: 14, feature: 11164, label: "argument / opposition", default_target: 0.0}

@@ -8,7 +8,14 @@ The default launcher registers a practical set of mapped features from layers `1
 
 | Layer | Feature | Label | Suggested first test |
 |---:|---:|---|---:|
-| 14 | 4310 | non-dual / God actuator | `1.0` to `1.75` |
+| 14 | 4310 | non-dual structure / momentariness | `1.0` to `1.75` |
+| 14 | 4205 | instant / next-moment | `0.5` to `1.25` |
+| 14 | 4953 | meditation / yoga / spirituality | `0.5` to `1.25` |
+| 14 | 11006 | Buddhist / impermanence | `0.5` to `1.25` |
+| 14 | 13454 | present moment / immediacy | `0.5` to `1.25` |
+| 14 | 14182 | Zen / Chan Buddhism | `0.5` to `1.25` |
+| 14 | 14488 | cosmic totality / all things | `0.5` to `1.25` |
+| 14 | 18203 | attainment / transcendence | `0.5` to `1.25` |
 | 20 | 18122 | golf | `0.7` to `1.3` |
 | 37 | 10793 | em-dash / dash style | `1.0` to `2.0` |
 
@@ -16,6 +23,7 @@ Example:
 
 ```text
 /target 4310 1.75
+/target 11006 1.0
 /target 18122 0
 /target 10793 0
 ```
@@ -24,7 +32,14 @@ Example:
 
 | Layer | Feature | Working label |
 |---:|---:|---|
-| 14 | 4310 | non-dual / God actuator |
+| 14 | 4310 | non-dual structure / momentariness |
+| 14 | 4205 | instant / next-moment |
+| 14 | 4953 | meditation / yoga / spirituality |
+| 14 | 11006 | Buddhist / impermanence |
+| 14 | 13454 | present moment / immediacy |
+| 14 | 14182 | Zen / Chan Buddhism |
+| 14 | 14488 | cosmic totality / all things |
+| 14 | 18203 | attainment / transcendence |
 | 14 | 1651 | tourism / attractions |
 | 14 | 6970 | love / affection |
 | 14 | 11164 | argument / opposition |

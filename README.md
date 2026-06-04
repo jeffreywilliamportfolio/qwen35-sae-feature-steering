@@ -107,7 +107,14 @@ Default layers:
 The default launcher registers these layer/feature pairs with target `0`:
 
 ```text
-14:4310   non-dual / God actuator
+14:4310   non-dual structure / momentariness
+14:4205   instant / next-moment
+14:4953   meditation / yoga / spirituality
+14:11006  Buddhist / impermanence
+14:13454  present moment / immediacy
+14:14182  Zen / Chan Buddhism
+14:14488  cosmic totality / all things
+14:18203  attainment / transcendence
 14:1651   tourism / attractions
 14:6970   love / affection
 14:11164  argument / opposition
