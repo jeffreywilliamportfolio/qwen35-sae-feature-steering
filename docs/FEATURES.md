@@ -28,18 +28,13 @@ Example:
 | 14 | 1651 | tourism / attractions |
 | 14 | 6970 | love / affection |
 | 14 | 11164 | argument / opposition |
-| 14 | 12327 | erotic / sexual language |
 | 16 | 2947 | fear / timid / afraid |
-| 16 | 21861 | erotic / orgasm language |
-| 20 | 52 | orgasm / erotic language |
 | 20 | 18122 | golf |
 | 20 | 3356 | criticism / arguments |
 | 20 | 571 | apology / guilt / sorry |
 | 20 | 30877 | anxiety / stress |
-| 26 | 727 | sexual / erotic language |
 | 26 | 8920 | refute / correct / debunk |
 | 37 | 10793 | em-dash / dash style |
-| 37 | 21049 | sexual / erotic language |
 
 ## Canonical L14 God Cluster
 
@@ -69,4 +64,3 @@ Start lower than you think:
 ```
 
 Values above `2` can make the feature dominate unrelated prompts. This is expected behavior for strong clamping, not a bug in sampling.
-

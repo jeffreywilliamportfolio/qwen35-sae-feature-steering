@@ -7,18 +7,13 @@ registered_features:
   - {layer: 14, feature: 1651, label: "tourism / attractions", default_target: 0.0}
   - {layer: 14, feature: 6970, label: "love / affection", default_target: 0.0}
   - {layer: 14, feature: 11164, label: "argument / opposition", default_target: 0.0}
-  - {layer: 14, feature: 12327, label: "erotic / sexual language", default_target: 0.0}
   - {layer: 16, feature: 2947, label: "fear / timid / afraid", default_target: 0.0}
-  - {layer: 16, feature: 21861, label: "erotic / orgasm language", default_target: 0.0}
-  - {layer: 20, feature: 52, label: "orgasm / erotic language", default_target: 0.0}
   - {layer: 20, feature: 18122, label: "golf", default_target: 0.0}
   - {layer: 20, feature: 3356, label: "criticism / arguments", default_target: 0.0}
   - {layer: 20, feature: 571, label: "apology / guilt / sorry", default_target: 0.0}
   - {layer: 20, feature: 30877, label: "anxiety / stress", default_target: 0.0}
-  - {layer: 26, feature: 727, label: "sexual / erotic language", default_target: 0.0}
   - {layer: 26, feature: 8920, label: "refute / correct / debunk", default_target: 0.0}
   - {layer: 37, feature: 10793, label: "em-dash / dash style", default_target: 0.0}
-  - {layer: 37, feature: 21049, label: "sexual / erotic language", default_target: 0.0}
 
 canonical_l14_god_cluster:
   - {layer: 14, feature: 4310, label: "non-dual structure / momentariness"}
@@ -29,4 +24,3 @@ canonical_l14_god_cluster:
   - {layer: 14, feature: 14182, label: "Zen / Chan Buddhism"}
   - {layer: 14, feature: 14488, label: "cosmic totality / all things"}
   - {layer: 14, feature: 18203, label: "attainment / transcendence"}
-

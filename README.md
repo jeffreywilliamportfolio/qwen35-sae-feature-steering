@@ -110,18 +110,13 @@ The default launcher registers these layer/feature pairs with target `0`:
 14:1651   tourism / attractions
 14:6970   love / affection
 14:11164  argument / opposition
-14:12327  erotic / sexual language
 16:2947   fear / timid / afraid
-16:21861  erotic / orgasm language
-20:52     orgasm / erotic language
 20:18122  golf
 20:3356   criticism / arguments
 20:571    apology / guilt / sorry
 20:30877  anxiety / stress
-26:727    sexual / erotic language
 26:8920   refute / correct / debunk
 37:10793  em-dash / dash style
-37:21049  sexual / erotic language
 ```
 
 See [docs/FEATURES.md](docs/FEATURES.md) for provenance and example settings.
@@ -148,4 +143,3 @@ This is an inference-time intervention. It does not train or edit the model weig
 - The script defaults to base-mode prompting rather than chat-template prompting.
 - Strong clamps can cause topic hijack or repetition. Start low and step upward.
 - `--soft-max-new-tokens` is a soft stop; `--max-new-tokens` remains the hard runaway cap.
-
