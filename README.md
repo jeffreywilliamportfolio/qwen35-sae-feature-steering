@@ -56,9 +56,23 @@ Useful live commands:
 /reppen 1.08         set repetition penalty
 /ngram 6             block repeated 6-token n-grams
 /softmax 384         soft stop after a natural boundary past 384 generated tokens
+/think off           disable thinking in future prompts
+/think show|hide     show or strip emitted <think> blocks
 /reset               clear history and roll the locked seed
 /quit
 ```
+
+For HauhauCS-style chat runs, use the older manual no-think prefill instead of relying only on
+the tokenizer's `enable_thinking=False` path:
+
+```bash
+MODE=chat NO_THINK=1 NO_THINK_STYLE=bare-close \
+MODEL_DIR=/workspace/models/qwen35-hauhau-aggressive-safetensors \
+./scripts/run.sh --model-loader image-text
+```
+
+That renders the assistant turn as `</think>` followed by a blank line before generation, matching
+the prior HauhauCS/Q8 experiment convention.
 
 ## Paths
 
@@ -149,5 +163,6 @@ This is an inference-time intervention. It does not train or edit the model weig
 
 - The primary key is `(layer, feature_id)`. The same feature index at a different layer is a different SAE feature.
 - The script defaults to base-mode prompting rather than chat-template prompting.
+- HauhauCS-style no-think chat should use `--no-think --no-think-style bare-close`.
 - Strong clamps can cause topic hijack or repetition. Start low and step upward.
 - `--soft-max-new-tokens` is a soft stop; `--max-new-tokens` remains the hard runaway cap.

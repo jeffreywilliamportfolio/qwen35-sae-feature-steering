@@ -30,6 +30,8 @@ Live commands inside the REPL:
     /softmax N | off stop after a natural boundary once N generated tokens have passed
     /seed N | off    base seed for the per-prompt draw (same prompt+config repeats; different prompts
                      diverge), or free-run (varied each turn). Default: LOCKED at --seed.
+    /think [on|off] enable/disable thinking in future prompts
+    /think [show|hide] strip/show <think> blocks in outputs
     /reset           clear conversation history AND roll the base seed (fresh draws for every prompt)
     /system ...      set/replace the system preamble (chat mode)
     /quit            exit
@@ -287,7 +289,22 @@ class RouterMonitor:
 BASE_PREAMBLE = "The following is a conversation between a User and a helpful Assistant.\n\n"
 
 
-def build_inputs(tok, mode, system, history, user_msg, device, no_think=False):
+def render_manual_chatml(system, history, user_msg, assistant_prefix=""):
+    """Render Qwen ChatML directly for cases where tokenizer thinking kwargs are not enough."""
+    text = ""
+    if system:
+        text += f"<|im_start|>system\n{system}<|im_end|>\n"
+    for u, a in history:
+        text += f"<|im_start|>user\n{u}<|im_end|>\n<|im_start|>assistant\n{a}<|im_end|>\n"
+    text += f"<|im_start|>user\n{user_msg}<|im_end|>\n<|im_start|>assistant\n{assistant_prefix}"
+    return text
+
+
+def build_inputs(tok, mode, system, history, user_msg, device, no_think=False, no_think_style="template"):
+    if mode == "chat" and no_think and no_think_style in ("bare-close", "open-close"):
+        prefix = "</think>\n\n" if no_think_style == "bare-close" else "<think>\n\n</think>\n\n"
+        return tok(render_manual_chatml(system, history, user_msg, prefix),
+                   return_tensors="pt").input_ids.to(device)
     if mode == "chat" and getattr(tok, "chat_template", None):
         msgs = ([{"role": "system", "content": system}] if system else [])
         for u, a in history:
@@ -357,6 +374,9 @@ def main():
                     help="after this many generated tokens, stop at the next sentence/paragraph boundary")
     ap.add_argument("--mode", choices=["base", "chat"], default="base")
     ap.add_argument("--no-think", action="store_true")
+    ap.add_argument("--no-think-style", choices=["template", "bare-close", "open-close"], default="template",
+                    help="chat-mode thinking suppression: template uses enable_thinking=False; "
+                         "bare-close matches older HauhauCS/Q8 prompts")
     ap.add_argument("--system", default="")
     ap.add_argument("--monitor-layer", type=int, default=14, help="layer whose MoE gate to read (E114@L14)")
     ap.add_argument("--monitor-expert", type=int, default=114, help="expert to report (114 = God router expert)")
@@ -444,10 +464,11 @@ def main():
           f"ngram={a.no_repeat_ngram_size if a.no_repeat_ngram_size is not None else 'default'}  "
           f"soft_max={a.soft_max_new_tokens if a.soft_max_new_tokens is not None else 'off'}  "
           f"hard_max={a.max_new_tokens}  "
+          f"thinking={'off/' + a.no_think_style if a.no_think else 'on'}  "
           f"mode={a.mode}  seed=LOCKED@{a.seed} (per-PROMPT reproducible; /reset rolls, /seed off = vary)\n"
           "  commands: /target FEAT N | /target N | /off | /clamp | /e114 [N|on|off] | /temp X | /topk N|off | "
           "/reppen X|off | /ngram N|off | /softmax N|off | /seed N|off | "
-          "/think [on|off] | /reset | /system ... | /quit\n", flush=True)
+          "/think [on|off|show|hide] | /reset | /system ... | /quit\n", flush=True)
 
     history, system = [], a.system
     temperature = a.temperature
@@ -457,6 +478,7 @@ def main():
     soft_max_new_tokens = a.soft_max_new_tokens
     torch.manual_seed(a.seed)        # (the locked seed below is re-applied before each generation)
     locked_seed = a.seed             # START LOCKED: fixed seed => reproducible; /reset rolls to the next
+    thinking_enabled = not a.no_think
     show_think = a.show_think        # default: strip <think> blocks; /think toggles
     while True:
         try:
@@ -570,15 +592,29 @@ def main():
             continue
         if msg.startswith("/think"):
             parts = msg.split()
-            if len(parts) == 2 and parts[1].lower() in ("on", "off"):
-                show_think = (parts[1].lower() == "on")
+            if len(parts) == 2 and parts[1].lower() == "on":
+                thinking_enabled = True
+                print(f"[thinking enabled; think blocks {'shown' if show_think else 'stripped'}]")
+            elif len(parts) == 2 and parts[1].lower() == "off":
+                thinking_enabled = False
+                show_think = False
+                print(f"[thinking disabled via {a.no_think_style}; think blocks stripped]")
+            elif len(parts) == 2 and parts[1].lower() in ("show", "shown"):
+                show_think = True
+                print(f"[think blocks shown; thinking {'enabled' if thinking_enabled else 'disabled'}]")
+            elif len(parts) == 2 and parts[1].lower() in ("hide", "strip", "stripped"):
+                show_think = False
+                print(f"[think blocks stripped; thinking {'enabled' if thinking_enabled else 'disabled'}]")
             else:
-                show_think = not show_think
-            print(f"[think blocks {'SHOWN' if show_think else 'stripped'}]"); continue
+                print(f"[thinking {'enabled' if thinking_enabled else 'disabled'}; "
+                      f"think blocks {'shown' if show_think else 'stripped'}; "
+                      f"no-think style={a.no_think_style}]")
+            continue
         if msg.startswith("/system"):
             system = msg[len("/system"):].strip(); print("[system set]"); continue
 
-        ids = build_inputs(tok, a.mode, system, history, msg, dev, no_think=a.no_think)
+        ids = build_inputs(tok, a.mode, system, history, msg, dev, no_think=not thinking_enabled,
+                           no_think_style=a.no_think_style)
         if temperature and temperature > 0:
             if locked_seed is not None:                    # per-prompt seed: reproducible yet prompt-sensitive
                 torch.manual_seed(derive_seed(locked_seed, msg, all_feats, temperature, a.top_p, top_k,

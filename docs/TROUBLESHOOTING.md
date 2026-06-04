@@ -45,6 +45,20 @@ For cleaner behavior, keep answers shorter with:
 --soft-max-new-tokens 384 --max-new-tokens 768
 ```
 
+## Thinking Blocks Appear
+
+`/think off` disables thinking in future prompts and strips any emitted `<think>` blocks from the
+display. `/think hide` only changes the display filter.
+
+For HauhauCS-style chat runs, prefer the manual bare-close no-think prompt:
+
+```bash
+MODE=chat NO_THINK=1 NO_THINK_STYLE=bare-close ./scripts/run.sh --model-loader image-text
+```
+
+This renders `<|im_start|>assistant` followed by `</think>` and a blank line before generation,
+matching the older HauhauCS/Q8 no-think experiment convention.
+
 ## Download Problems
 
 Make sure `HF_TOKEN` is exported if the model or SAE repo requires authentication:
@@ -60,4 +74,3 @@ export HF_XET_HIGH_PERFORMANCE=1
 ```
 
 The older `HF_HUB_ENABLE_HF_TRANSFER` setting may print deprecation warnings in newer Hugging Face Hub versions.
-
