@@ -1,0 +1,10 @@
+accelerate
+einops
+huggingface_hub[cli]
+hf_transfer
+protobuf
+safetensors
+sentencepiece
+tiktoken
+transformers
+
