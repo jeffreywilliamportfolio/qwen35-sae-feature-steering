@@ -17,6 +17,7 @@ An 80 GB card may be tight for bf16 Hugging Face chat once model overhead, activ
 ## Quick Start
 
 On a cloud GPU box:
+(Have your HuggingFace Token ready or the download will throttle)
 
 ```bash
 git clone <your-new-repo-url>
