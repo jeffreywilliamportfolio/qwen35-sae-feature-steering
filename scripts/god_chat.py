@@ -41,7 +41,8 @@ Run on the GPU box (35B does not fit on the Mac):
 """
 import argparse, hashlib, os, re, sys, threading, torch
 from queue import Empty
-from transformers import AutoModelForCausalLM, AutoTokenizer, StoppingCriteria, StoppingCriteriaList, TextIteratorStreamer
+from transformers import (AutoConfig, AutoModelForCausalLM, AutoModelForImageTextToText, AutoTokenizer,
+                          StoppingCriteria, StoppingCriteriaList, TextIteratorStreamer)
 
 
 _THINK_RE = re.compile(r"<think>.*?</think>", re.DOTALL | re.IGNORECASE)
@@ -333,6 +334,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", default="Qwen/Qwen3.5-35B-A3B-Base")
     ap.add_argument("--gguf-file", default=None)
+    ap.add_argument("--model-loader", choices=["auto", "causal", "image-text"], default="auto",
+                    help="which Transformers AutoModel loader to use")
     ap.add_argument("--clamp", default=None,
                     help='multi-layer spec "L:F:T,L:F:T,..." e.g. "14:4310:3,14:6970:0.75,20:18122:3"')
     ap.add_argument("--sae-dir", default=None, help="dir holding layer{L}.sae.pt (for --clamp)")
@@ -380,11 +383,23 @@ def main():
     print(f"loading {a.model} ...", flush=True)
     _load_kw = {"gguf_file": a.gguf_file} if a.gguf_file else {}
     tok = AutoTokenizer.from_pretrained(a.model, **_load_kw)
-    model = AutoModelForCausalLM.from_pretrained(a.model, torch_dtype=torch.bfloat16,
-                                                 device_map="cuda", **_load_kw)
+    model_loader = AutoModelForCausalLM
+    if a.model_loader == "image-text":
+        model_loader = AutoModelForImageTextToText
+    elif a.model_loader == "auto":
+        cfg = AutoConfig.from_pretrained(a.model, **_load_kw)
+        archs = " ".join(getattr(cfg, "architectures", []) or [])
+        if "ConditionalGeneration" in archs:
+            model_loader = AutoModelForImageTextToText
+    model = model_loader.from_pretrained(a.model, torch_dtype=torch.bfloat16,
+                                         device_map="cuda", **_load_kw)
     model.eval()
     dev = next(model.parameters()).device
-    d_model = model.config.hidden_size
+    d_model = (getattr(model.config, "hidden_size", None)
+               or getattr(getattr(model.config, "text_config", None), "hidden_size", None)
+               or getattr(getattr(model.config, "language_config", None), "hidden_size", None))
+    if d_model is None:
+        raise SystemExit("could not infer model hidden_size from config")
     layers = find_layers(model)
 
     # group clamp specs by layer, load each layer's SAE once, register one hook per layer
